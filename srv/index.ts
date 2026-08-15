@@ -1,14 +1,9 @@
 import express, { type Express, type Request, type Response } from "express";
 import cors from "cors";
-import { getCalendarData } from "./calendar";
-import { getContactBirthdays } from "./contacts";
 import { PORT } from "../shr/conf";
+import { initialize } from "./initialize";
 
-if (!process.env.APPLE_USERNAME || !process.env.APPLE_APP_PASSWORD) {
-  throw new Error(
-    "Missing required environment variables: APPLE_USERNAME and APPLE_APP_PASSWORD",
-  );
-}
+const { calendarClient, contactsClient } = await initialize();
 
 const app: Express = express();
 
@@ -18,13 +13,13 @@ if (process.env.NODE_ENV === "production") {
   app.use(cors());
 }
 
-app.get("/calendar", (req: Request, res: Response) => {
+app.get("/calendar", async (req: Request, res: Response) => {
   res.setHeader("Content-Type", "text/calendar; charset=utf-8");
-  res.send(getCalendarData());
+  res.send(await calendarClient.getCalendarData());
 });
 
-app.get("/birthdays", (req: Request, res: Response) => {
-  res.json(getContactBirthdays());
+app.get("/birthdays", async (req: Request, res: Response) => {
+  res.json(await contactsClient.getContactBirthday());
 });
 
 app.listen(PORT, () => {

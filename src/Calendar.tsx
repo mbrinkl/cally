@@ -6,7 +6,6 @@ import listPlugin from "@fullcalendar/react/list";
 import multiMonthPlugin from "@fullcalendar/react/multimonth";
 import iCalendarPlugin from "@fullcalendar/icalendar";
 import rrulePlugin from "@fullcalendar/rrule";
-import birthdayCakeImg from "./assets/birthday-cake.png";
 import { SERVER_URL } from "./conf";
 
 export const Calendar = () => {
@@ -76,19 +75,9 @@ export const Calendar = () => {
         const age = occurrenceDate.getFullYear() - birthday.getFullYear();
 
         return (
-          <div
-            style={{
-              paddingLeft: "8px",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <img src={birthdayCakeImg} alt="Birthday Cake" width={32} />
-            <b>
-              {arg.event.title} ({age})
-            </b>
-          </div>
+          <b>
+            {arg.event.title} ({age})
+          </b>
         );
       }}
     />
