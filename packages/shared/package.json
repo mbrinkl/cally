@@ -1,0 +1,8 @@
+{
+  "name": "@cally/shared",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./conf": "./conf.ts"
+  }
+}

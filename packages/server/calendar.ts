@@ -5,7 +5,7 @@ export class CalendarClient {
   private calendar!: DAVCalendar;
 
   async setup() {
-    const client = await createDAVClient({
+    this.client = await createDAVClient({
       serverUrl: "https://caldav.icloud.com",
       credentials: {
         username: process.env.APPLE_USERNAME,
@@ -15,7 +15,7 @@ export class CalendarClient {
       defaultAccountType: "caldav",
     });
 
-    const calendars = await client.fetchCalendars();
+    const calendars = await this.client.fetchCalendars();
     const calendar = calendars.find((x) => x.displayName === "Family")!;
 
     if (!calendar) {

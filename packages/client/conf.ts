@@ -1,4 +1,4 @@
-import { PORT } from "../shr/conf";
+import { PORT } from "@cally/shared/conf";
 
 const { origin, protocol, hostname } = window.location;
 export const SERVER_URL =
