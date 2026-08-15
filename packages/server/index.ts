@@ -7,7 +7,7 @@ import { initialize } from "./initialize";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const clientDistDir = path.resolve(__dirname, "../../client/dist");
+const clientDistDir = path.resolve(__dirname, "./client");
 
 const port = Number(process.env.PORT) || DEFAULT_PORT;
 
