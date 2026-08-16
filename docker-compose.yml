@@ -1,6 +1,6 @@
 services:
   app:
-    image: cally:local
+    image: mbrinkl/cally:latest
     build:
       context: .
     ports:
