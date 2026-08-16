@@ -16,7 +16,7 @@ export class CalendarClient {
     });
 
     const calendars = await this.client.fetchCalendars();
-    const calendar = calendars.find((x) => x.displayName === "Family")!;
+    const calendar = calendars.find((x) => x.displayName === "Family");
 
     if (!calendar) {
       throw new Error("Calendar not found");
