@@ -3,7 +3,7 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "outDir": "./dist",
+    "outDir": "../../dist",
     "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,

@@ -15,10 +15,11 @@ const { calendarClient, contactsClient } = await initialize();
 
 const app: Express = express();
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(clientDistDir));
-} else {
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+if (process.env.NODE_ENV === "development") {
   app.use(cors());
+} else {
+  app.use(express.static(clientDistDir));
 }
 
 app.get("/calendar", async (req: Request, res: Response) => {

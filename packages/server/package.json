@@ -3,9 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsup index.ts --platform node --format esm --out-dir ../../dist",
-    "dev": "tsx --env-file=../../.env index.ts",
-    "server:prod": "cross-env NODE_ENV=production node --env-file=../../.env ../../dist/index.js"
+    "build": "tsdown index.ts --platform node --format esm --out-dir ../../dist",
+    "dev": "cross-env NODE_ENV=development tsx --env-file=../../.env index.ts"
   },
   "dependencies": {
     "@cally/shared": "*",
@@ -17,8 +16,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^24.13.3",
-    "cross-env": "^10.1.0",
-    "tsx": "^4.23.12",
-    "typescript": "~6.0.2"
+    "tsdown": "^0.22.14",
+    "tsx": "^4.23.12"
   }
 }

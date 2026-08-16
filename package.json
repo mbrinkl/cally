@@ -10,14 +10,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "rimraf dist && npm run build --workspace @cally/client && npm run build --workspace @cally/server",
+    "build": "rimraf dist && npm run build --workspace @cally/server && npm run build --workspace @cally/client",
     "dev": "concurrently -n client,server -c cyan,magenta \"npm run dev --workspace @cally/client\" \"npm run dev --workspace @cally/server\"",
-    "preview": "npm run preview --workspace @cally/client",
-    "prod": "npm run build && node --env-file=.env ./dist/index.js"
+    "prod": "npm run build && cross-env NODE_ENV=production node --env-file=.env ./dist/index.mjs"
   },
   "devDependencies": {
     "concurrently": "^10.0.4",
+    "cross-env": "^10.1.0",
     "rimraf": "^6.0.1",
-    "tsup": "^8.5.1"
+    "typescript": "^6.0.3"
   }
 }
