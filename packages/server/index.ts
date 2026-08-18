@@ -2,21 +2,18 @@ import express, { type Express, type Request, type Response } from "express";
 import cors from "cors";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DEFAULT_PORT } from "@cally/shared/conf";
 import { initialize } from "./initialize";
+import { env } from "./env";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const clientDistDir = path.resolve(__dirname, "./client");
 
-const port = Number(process.env.PORT) || DEFAULT_PORT;
-
 const { calendarClient, contactsClient } = await initialize();
 
 const app: Express = express();
 
-console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-if (process.env.NODE_ENV === "development") {
+if (env.NODE_ENV === "development") {
   app.use(cors());
 } else {
   app.use(express.static(clientDistDir));
@@ -31,6 +28,6 @@ app.get("/birthdays", async (req: Request, res: Response) => {
   res.json(await contactsClient.getContactBirthday());
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+app.listen(env.PORT, () => {
+  console.log(`Listening on port ${env.PORT}`);
 });

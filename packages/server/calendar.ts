@@ -1,33 +1,48 @@
 import { createDAVClient, DAVCalendar } from "tsdav";
+import { env } from "./env";
 
 export class CalendarClient {
   private client!: Awaited<ReturnType<typeof createDAVClient>>;
-  private calendar!: DAVCalendar;
+  private calendars!: DAVCalendar[];
 
   async setup() {
     this.client = await createDAVClient({
       serverUrl: "https://caldav.icloud.com",
       credentials: {
-        username: process.env.APPLE_USERNAME,
-        password: process.env.APPLE_APP_PASSWORD,
+        username: env.APPLE_USERNAME,
+        password: env.APPLE_APP_PASSWORD,
       },
       authMethod: "Basic",
       defaultAccountType: "caldav",
     });
 
-    const calendars = await this.client.fetchCalendars();
-    const calendar = calendars.find((x) => x.displayName === "Family");
+    const calendarData = await this.client.fetchCalendars();
+    const vEventCalendarData = calendarData.filter((calendar) =>
+      calendar.components?.includes("VEVENT"),
+    );
+    const calendars = vEventCalendarData.filter(
+      (calendar) =>
+        typeof calendar.displayName === "string" &&
+        env.CALENDAR_IDS.includes(calendar.displayName),
+    );
 
-    if (!calendar) {
-      throw new Error("Calendar not found");
+    if (calendars.length !== env.CALENDAR_IDS.length) {
+      console.error("Unable to find all specified calendars.");
+      console.error("Expected calendar IDs:", env.CALENDAR_IDS);
+      console.error(
+        "Found calendar display names:",
+        vEventCalendarData.map((c) => c.displayName),
+      );
+      throw new Error("Did not find all specified calendars.");
     }
 
-    this.calendar = calendar;
+    this.calendars = calendars;
   }
 
   async getCalendarData(): Promise<string> {
+    // TODO support multi calendar response
     const calendarObjects = await this.client.fetchCalendarObjects({
-      calendar: this.calendar,
+      calendar: this.calendars[0],
     });
 
     const rawIcsList: string[] = calendarObjects

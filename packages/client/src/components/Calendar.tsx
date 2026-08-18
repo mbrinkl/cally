@@ -28,7 +28,7 @@ const getBirthdays = async (): Promise<EventSourceInput> => {
     extendedProps: {
       birthday: contact.birthday,
     },
-    color: "purple",
+    color: "magenta",
   }));
 };
 
@@ -69,7 +69,6 @@ export const Calendar = () => {
         {
           url: `${SERVER_URL}/calendar`,
           format: "ics",
-          color: "blue",
         },
         query.data,
       ]}

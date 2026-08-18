@@ -1,4 +1,5 @@
 import { createDAVClient, DAVCollection } from "tsdav";
+import { env } from "./env";
 
 type ContactBirthday = {
   name: string;
@@ -13,8 +14,8 @@ export class ContactsClient {
     this.client = await createDAVClient({
       serverUrl: "https://contacts.icloud.com",
       credentials: {
-        username: process.env.APPLE_USERNAME,
-        password: process.env.APPLE_APP_PASSWORD,
+        username: env.APPLE_USERNAME,
+        password: env.APPLE_APP_PASSWORD,
       },
       authMethod: "Basic",
       defaultAccountType: "carddav",
