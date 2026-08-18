@@ -1,0 +1,77 @@
+.calendar-event {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  padding: 4px 6px;
+  color: inherit;
+}
+
+.calendar-event__main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 1px;
+}
+
+.calendar-event__time {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.1;
+  opacity: 0.72;
+  white-space: nowrap;
+}
+
+.calendar-event__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+/* ============================================
+   Birthday
+   ============================================ */
+
+.calendar-event--birthday {
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+}
+
+.calendar-event__birthday-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 23px;
+
+  width: 23px;
+  height: 23px;
+
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.22);
+
+  font-size: 12px;
+}
+
+.calendar-event--birthday .calendar-event__title {
+  flex: 1;
+}
+
+/* ============================================
+   Day Grid
+   ============================================ */
+
+.fc .fc-daygrid-event {
+  padding: 0;
+}
+
+.fc .fc-daygrid-event .calendar-event {
+  min-height: 30px;
+}
