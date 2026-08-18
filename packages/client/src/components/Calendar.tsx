@@ -3,7 +3,6 @@ import themePlugin from "@fullcalendar/react/themes/forma";
 import dayGridPlugin from "@fullcalendar/react/daygrid";
 import timeGridPlugin from "@fullcalendar/react/timegrid";
 import listPlugin from "@fullcalendar/react/list";
-import multiMonthPlugin from "@fullcalendar/react/multimonth";
 import iCalendarPlugin from "@fullcalendar/icalendar";
 import rrulePlugin from "@fullcalendar/rrule";
 import { SERVER_URL } from "../conf";
@@ -34,7 +33,6 @@ const getBirthdays = async (): Promise<EventSourceInput> => {
 
 export const Calendar = () => {
   const query = useQuery({ queryKey: ["birthdays"], queryFn: getBirthdays });
-  console.log("getting query", query.data);
 
   if (!query.data) {
     return null;
@@ -49,7 +47,6 @@ export const Calendar = () => {
         dayGridPlugin,
         timeGridPlugin,
         listPlugin,
-        multiMonthPlugin,
         iCalendarPlugin as any,
       ]}
       colorScheme="dark"
@@ -57,7 +54,7 @@ export const Calendar = () => {
       headerToolbar={{
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek,multiMonthYear",
+        right: "listWeek,dayGridMonth,timeGridWeek,timeGridDay",
       }}
       initialView="listWeek"
       titleFormat={{
