@@ -16,3 +16,5 @@ CALENDAR_IDS=`comma-separated ids of calendars to include`
 
 **UI**
 COLOR_SCHEME=`light (default) | dark`
+CALENDAR_COLORS=`comma-separated list of colors, maps 1-to-1 with CALENDAR_IDS`
+BIRTHDAYS_COLOR=`a color`

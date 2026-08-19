@@ -1,4 +1,4 @@
-import type { EventSourceInput } from "@fullcalendar/react";
+import type { EventInput } from "@fullcalendar/react";
 import { SERVER_URL } from "../conf";
 import { useQuery } from "@tanstack/react-query";
 import type { ContactBirthday, UiConfig } from "@cally/shared";
@@ -13,9 +13,7 @@ const getBirthdays = async (): Promise<ContactBirthday[]> => {
   return await res.json();
 };
 
-const getContactsEventSource = (
-  contacts: ContactBirthday[],
-): EventSourceInput => {
+const getContactsEventSource = (contacts: ContactBirthday[]): EventInput[] => {
   return contacts.map((contact) => ({
     title: contact.name,
     allDay: true,
@@ -26,7 +24,6 @@ const getContactsEventSource = (
     extendedProps: {
       birthday: contact.birthday,
     },
-    color: "magenta",
   }));
 };
 

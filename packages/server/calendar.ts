@@ -39,10 +39,16 @@ export class CalendarClient {
     this.calendars = calendars;
   }
 
-  async getCalendarData(): Promise<string> {
-    // TODO support multi calendar response
+  async getCalendarData(id: string): Promise<string> {
+    const calendar = this.calendars.find((x) => x.displayName === id);
+    if (!calendar) {
+      throw new Error(
+        `Invalid id supplied to ${this.getCalendarData.name} - ${id}`,
+      );
+    }
+
     const calendarObjects = await this.client.fetchCalendarObjects({
-      calendar: this.calendars[0],
+      calendar,
     });
 
     const rawIcsList: string[] = calendarObjects

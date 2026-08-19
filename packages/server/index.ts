@@ -20,10 +20,13 @@ if (env.NODE_ENV === "development") {
   app.use(express.static(clientDistDir));
 }
 
-app.get("/calendar", async (req: Request, res: Response) => {
-  res.setHeader("Content-Type", "text/calendar; charset=utf-8");
-  res.send(await calendarClient.getCalendarData());
-});
+app.get(
+  "/calendar/:id",
+  async (req: Request<{ id: string }>, res: Response) => {
+    res.setHeader("Content-Type", "text/calendar; charset=utf-8");
+    res.send(await calendarClient.getCalendarData(req.params.id));
+  },
+);
 
 app.get("/birthdays", async (req: Request, res: Response) => {
   res.json(await contactsClient.getContactBirthday());
@@ -32,6 +35,9 @@ app.get("/birthdays", async (req: Request, res: Response) => {
 app.get("/config", async (req: Request, res: Response) => {
   const config: UiConfig = {
     colorScheme: env.COLOR_SCHEME,
+    calendarIds: env.CALENDAR_IDS,
+    calendarColors: env.CALENDAR_COLORS,
+    birthdaysColor: env.BIRTHDAYS_COLOR,
   };
   res.json(config);
 });

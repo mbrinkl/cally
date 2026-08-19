@@ -1,11 +1,15 @@
-import FullCalendar from "@fullcalendar/react";
+import FullCalendar, { type EventSourceInput } from "@fullcalendar/react";
 import themePlugin from "@fullcalendar/react/themes/forma";
 import dayGridPlugin from "@fullcalendar/react/daygrid";
 import timeGridPlugin from "@fullcalendar/react/timegrid";
 import listPlugin from "@fullcalendar/react/list";
 import iCalendarPlugin from "@fullcalendar/icalendar";
 import rrulePlugin from "@fullcalendar/rrule";
-import { SERVER_URL } from "../conf";
+import {
+  DEFAULT_BIRTHDAYS_COLOR,
+  DEFAULT_CALENDAR_COLORS,
+  SERVER_URL,
+} from "../conf";
 import { EventContent } from "./EventContent";
 import { useBirthdaysQuery, useConfigQuery } from "../api";
 
@@ -43,10 +47,17 @@ export const Calendar = () => {
       showNonCurrentDates={false}
       eventSources={[
         {
-          url: `${SERVER_URL}/calendar`,
-          format: "ics",
+          events: birthdays,
+          color: config.birthdaysColor || DEFAULT_BIRTHDAYS_COLOR,
         },
-        birthdays,
+        ...config.calendarIds.map(
+          (id, index): EventSourceInput => ({
+            url: `${SERVER_URL}/calendar/${id}`,
+            format: "ics",
+            color:
+              config.calendarColors?.[index] || DEFAULT_CALENDAR_COLORS[index],
+          }),
+        ),
       ]}
       eventContent={(info) => <EventContent info={info} />}
     />
