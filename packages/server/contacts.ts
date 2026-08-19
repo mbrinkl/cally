@@ -1,10 +1,6 @@
 import { createDAVClient, DAVCollection } from "tsdav";
 import { env } from "./env";
-
-type ContactBirthday = {
-  name: string;
-  birthday: string;
-};
+import { ContactBirthday } from "@cally/shared";
 
 export class ContactsClient {
   private client!: Awaited<ReturnType<typeof createDAVClient>>;

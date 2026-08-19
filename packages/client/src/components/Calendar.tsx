@@ -1,4 +1,4 @@
-import FullCalendar, { type EventSourceInput } from "@fullcalendar/react";
+import FullCalendar from "@fullcalendar/react";
 import themePlugin from "@fullcalendar/react/themes/forma";
 import dayGridPlugin from "@fullcalendar/react/daygrid";
 import timeGridPlugin from "@fullcalendar/react/timegrid";
@@ -7,35 +7,14 @@ import iCalendarPlugin from "@fullcalendar/icalendar";
 import rrulePlugin from "@fullcalendar/rrule";
 import { SERVER_URL } from "../conf";
 import { EventContent } from "./EventContent";
-import { useQuery } from "@tanstack/react-query";
-
-type ContactBirthday = {
-  name: string;
-  birthday: string;
-};
-
-const getBirthdays = async (): Promise<EventSourceInput> => {
-  const res = await fetch(`${SERVER_URL}/birthdays`);
-  const contacts = (await res.json()) as ContactBirthday[];
-  return contacts.map((contact) => ({
-    title: contact.name,
-    allDay: true,
-    rrule: {
-      freq: "yearly",
-      dtstart: contact.birthday,
-    },
-    extendedProps: {
-      birthday: contact.birthday,
-    },
-    color: "magenta",
-  }));
-};
+import { useBirthdaysQuery, useConfigQuery } from "../api";
 
 export const Calendar = () => {
-  const query = useQuery({ queryKey: ["birthdays"], queryFn: getBirthdays });
+  const { data: birthdays } = useBirthdaysQuery();
+  const { data: config } = useConfigQuery();
 
-  if (!query.data) {
-    return null;
+  if (!birthdays || !config) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -49,7 +28,7 @@ export const Calendar = () => {
         listPlugin,
         iCalendarPlugin as any,
       ]}
-      colorScheme="dark"
+      colorScheme={config.colorScheme}
       nowIndicator
       headerToolbar={{
         left: "prev,next today",
@@ -67,7 +46,7 @@ export const Calendar = () => {
           url: `${SERVER_URL}/calendar`,
           format: "ics",
         },
-        query.data,
+        birthdays,
       ]}
       eventContent={(info) => <EventContent info={info} />}
     />

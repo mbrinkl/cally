@@ -1,4 +1,4 @@
-import { DEFAULT_PORT } from "@cally/shared/conf";
+import { DEFAULT_PORT } from "@cally/shared";
 
 const { origin, protocol, hostname } = window.location;
 

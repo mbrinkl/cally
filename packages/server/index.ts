@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { initialize } from "./initialize";
 import { env } from "./env";
+import { UiConfig } from "@cally/shared";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,6 +27,13 @@ app.get("/calendar", async (req: Request, res: Response) => {
 
 app.get("/birthdays", async (req: Request, res: Response) => {
   res.json(await contactsClient.getContactBirthday());
+});
+
+app.get("/config", async (req: Request, res: Response) => {
+  const config: UiConfig = {
+    colorScheme: env.COLOR_SCHEME,
+  };
+  res.json(config);
 });
 
 app.listen(env.PORT, () => {

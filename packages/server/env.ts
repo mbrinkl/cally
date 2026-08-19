@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DEFAULT_PORT } from "@cally/shared/conf";
+import { DEFAULT_PORT } from "@cally/shared";
 
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production"]),
@@ -10,6 +10,7 @@ const envSchema = z.object({
     .string()
     .transform((value) => value.split(",").map((item) => item.trim()))
     .pipe(z.array(z.string().min(1)).min(1)),
+  COLOR_SCHEME: z.enum(["light", "dark"]).default("light"),
 });
 
 const result = envSchema.safeParse(process.env);
