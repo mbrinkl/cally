@@ -10,12 +10,22 @@ const envSchema = z.object({
     .string()
     .transform((value) => value.split(",").map((item) => item.trim()))
     .pipe(z.array(z.string().min(1)).min(1)),
+  EXTERNAL_ICAL_URLS: z
+    .string()
+    .transform((value) => value.split(",").map((item) => item.trim()))
+    .pipe(z.array(z.url()).min(1))
+    .optional(),
   CALENDAR_COLORS: z
     .string()
     .transform((value) => value.split(",").map((item) => item.trim()))
     .pipe(z.array(z.string().min(1)).min(1))
     .optional(),
   BIRTHDAYS_COLOR: z.string().optional(),
+  EXTERNAL_ICAL_COLORS: z
+    .string()
+    .transform((value) => value.split(",").map((item) => item.trim()))
+    .pipe(z.array(z.string().min(1)).min(1))
+    .optional(),
   COLOR_SCHEME: z.enum(["light", "dark"]).default("light"),
 });
 

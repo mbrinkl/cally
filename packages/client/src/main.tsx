@@ -4,6 +4,7 @@ import { Calendar } from "./components/Calendar";
 import "@fullcalendar/react/skeleton.css";
 import "@fullcalendar/react/themes/forma/theme.css";
 import "@fullcalendar/react/themes/forma/palettes/blue.css";
+import "./overrides.css";
 
 const queryClient = new QueryClient();
 

@@ -17,6 +17,8 @@ APPLE_APP_PASSWORD=`apple app password`
 
 CALENDAR_IDS=`comma-separated ids of calendars to include`
 
+EXTERNAL_ICAL_URLS=`comma-separated urls of external iCal calendars`
+
 **UI**
 
 COLOR_SCHEME=`light (default) | dark`
@@ -24,3 +26,5 @@ COLOR_SCHEME=`light (default) | dark`
 CALENDAR_COLORS=`comma-separated list of colors, maps 1-to-1 with CALENDAR_IDS`
 
 BIRTHDAYS_COLOR=`a color`
+
+EXTERNAL_ICAL_COLORS=`comma-separated list of colors, maps 1-to-1 with EXTERNAL_ICAL_URLS`

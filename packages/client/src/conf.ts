@@ -13,4 +13,11 @@ export const DEFAULT_CALENDAR_COLORS: string[] = [
   "green",
 ];
 
-export const DEFAULT_BIRTHDAYS_COLOR: string = "magenta";
+export const DEFAULT_EXTERNAL_ICAL_COLORS: string[] = [
+  "lime",
+  "cyan",
+  "pink",
+  "orange",
+];
+
+export const DEFAULT_BIRTHDAYS_COLOR: string = "gray";

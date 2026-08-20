@@ -8,6 +8,7 @@ import rrulePlugin from "@fullcalendar/rrule";
 import {
   DEFAULT_BIRTHDAYS_COLOR,
   DEFAULT_CALENDAR_COLORS,
+  DEFAULT_EXTERNAL_ICAL_COLORS,
   SERVER_URL,
 } from "../conf";
 import { EventContent } from "./EventContent";
@@ -45,10 +46,12 @@ export const Calendar = () => {
         year: "numeric",
       }}
       showNonCurrentDates={false}
+      fixedWeekCount={false}
       eventSources={[
         {
           events: birthdays,
           color: config.birthdaysColor || DEFAULT_BIRTHDAYS_COLOR,
+          className: "birthday-event",
         },
         ...config.calendarIds.map(
           (id, index): EventSourceInput => ({
@@ -58,8 +61,22 @@ export const Calendar = () => {
               config.calendarColors?.[index] || DEFAULT_CALENDAR_COLORS[index],
           }),
         ),
+        ...(config.externalICalUrls ?? []).map(
+          (extUrl, index): EventSourceInput => ({
+            url: `${SERVER_URL}/external-calendar?url=${encodeURIComponent(
+              extUrl,
+            )}`,
+            format: "ics",
+            color:
+              config.externalICalColors?.[index] ||
+              DEFAULT_EXTERNAL_ICAL_COLORS[index],
+          }),
+        ),
       ]}
       eventContent={(info) => <EventContent info={info} />}
+      dayCellClass={(info) =>
+        info.view.type === "dayGridMonth" && info.isToday && "gg-idiot"
+      }
     />
   );
 };
